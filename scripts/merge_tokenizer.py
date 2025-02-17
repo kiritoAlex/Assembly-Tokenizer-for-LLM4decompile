@@ -1,6 +1,6 @@
 import os
 os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"]="python"
-from transformers import LlamaTokenizer
+from transformers import LlamaTokenizer,LlamaTokenizerFast
 from sentencepiece import sentencepiece_model_pb2 as sp_pb2_model
 import sentencepiece as spm
 from tokenizers import SentencePieceBPETokenizer
@@ -41,7 +41,10 @@ print(f"New model pieces: {len(llama_spm.pieces)}")
 output_sp_dir = '../Assembly_tokenizer/merged_tokenizer_sp'
 output_hf_dir = '../Assembly_tokenizer/merged_tokenizer_hf'
 os.makedirs(output_sp_dir,exist_ok=True)
-with open(output_sp_dir+'/assembly.model', 'wb') as f:
+#保存为sentencepiece格式（tokenizer.model）
+with open(output_sp_dir+'/tokenizer.model', 'wb') as f:
     f.write(llama_spm.SerializeToString())
-tokenizer = LlamaTokenizer(vocab_file=output_sp_dir+'/assembly.model')
+#保存为huggingface格式（tokenizer.json）
+tokenizer_class = LlamaTokenizer if LlamaTokenizerFast is None else LlamaTokenizerFast
+tokenizer = tokenizer_class(output_sp_dir + '/tokenizer.model')
 tokenizer.save_pretrained(output_hf_dir)

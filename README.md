@@ -10,6 +10,7 @@ Compile AnghaBench to get assembly instructions for training(datsets)
 
 ```
 cd scripts
+cd merge-tokenizer
 python compile.py --root ../AnghaBench --output ../assembly_instruction.jsonl
 ```
 
@@ -41,9 +42,14 @@ PS: yahma/llama-7b-hf的tokenizer和LLM4Binary的tokenizer分词效果完全一�
 
 yahma/llama-7b-hf的tokenizer共有32000个tokens，与具有4000个tokens的Assembly-tokenizer.model合并后，新的tokenizer去除重复tokens后共有33892个tokens，模型分别以huggingface格式和sentencepiece格式保存在Assembly——tokenizer文件夹下
 
-### 模型训练(Todo)
+### 模型训练(In progress)
 
 LoRA预训练获得LoRA权重参数
+
+```
+cd ../pre-train
+sh run_pt.sh
+```
 
 将LoRA权重与基础模型deepseek-coder合并
 

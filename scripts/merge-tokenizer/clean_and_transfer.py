@@ -29,7 +29,7 @@ def clean_jsonl_file(input_file, output_file):
 
 if __name__ == "__main__":
 
-    input_path = "../assembly_instruction.jsonl"
-    output_path = '../assembly_instruction.txt'
+    input_path = "../../data/assembly_instruction.jsonl"
+    output_path = '../../data/assembly_instruction.txt'
     
     clean_jsonl_file(input_path, output_path)

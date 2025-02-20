@@ -4,8 +4,8 @@ import sentencepiece as spm
 from tokenizers import SentencePieceBPETokenizer
 
 #Load tokenizers
-LLM4Binary_tokenizer = AutoTokenizer.from_pretrained("../LLM4Binary_tokenizer")
-Assembly_tokenizer = AutoTokenizer.from_pretrained("../Assembly_tokenizer/merged_tokenizer_hf")
+LLM4Binary_tokenizer = AutoTokenizer.from_pretrained("../../LLM4Binary_tokenizer")
+Assembly_tokenizer = AutoTokenizer.from_pretrained("../../Assembly_tokenizer/merged_tokenizer_hf")
 #Test tokenizers with sample
 sample="""<sch311x_wdt_get_status>:
 endbr64
@@ -38,10 +38,16 @@ callq  6d <sch311x_wdt_get_status+0x6d>
 nop
 leaveq
 retq"""
-print(LLM4Binary_tokenizer.tokenize(sample))
-print(Assembly_tokenizer.tokenize(sample))
 
-with open("../assembly_instruction.txt", "r", encoding="utf-8") as f:
+with open("./llm4_tokenizer.txt","w") as f:
+    for i in LLM4Binary_tokenizer.tokenize(sample):
+        f.write(f"{i}\n")
+
+with open("./assembly_tokenizer.txt","w") as f:
+    for i in Assembly_tokenizer.tokenize(sample):
+        f.write(f"{i}\n") 
+
+with open("../../data/assembly_instruction.txt", "r", encoding="utf-8") as f:
     text = [f.readline() for _ in range(1000000)]
     text = ' '.join(text)
 

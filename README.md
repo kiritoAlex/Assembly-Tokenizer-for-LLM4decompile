@@ -1,7 +1,7 @@
 # Assembly-Tokenizer-for-LLM4decompile
 
 ## 工作流程
-### 扩充词表
+### 扩充词表 (Done)
 Clone AnghaBench from github
 
 ``git clone https://github.com/brenocfg/AnghaBench.git``
@@ -11,7 +11,7 @@ Compile AnghaBench to get assembly instructions for training(datsets)
 ```
 cd scripts
 cd merge-tokenizer
-python compile.py --root ../AnghaBench --output ../assembly_instruction.jsonl
+python compile.py --root ../../AnghaBench --output ../../data/assembly_instruction.jsonl
 ```
 
 由于sentencepiece不能直接使用jsonl格式的文件进行训练，需要转化为txt格式的文本，文件格式为每行一条汇编指令
@@ -20,7 +20,7 @@ python compile.py --root ../AnghaBench --output ../assembly_instruction.jsonl
 
 利用汇编指令数据集结合sentencepiece训练得到assembly_sp.model
 
-`spm_train   --input=../assembly_instruction.txt   --model_prefix=../Assembly-tokenizer   --vocab_size=4000   --character_coverage=0.995   --model_type=bpe   --add_dummy_prefix=false   --input_sentence_size=10000000   --shuffle_input_sentence=1   --train_extremely_large_corpus=1   --num_threads=8   --byte_fallback=true`
+`spm_train   --input=../../data/assembly_instruction.txt   --model_prefix=../../Assembly-tokenizer   --vocab_size=4000   --character_coverage=0.995   --model_type=bpe   --add_dummy_prefix=false   --input_sentence_size=10000000   --shuffle_input_sentence=1   --train_extremely_large_corpus=1   --num_threads=8   --byte_fallback=true`
 * --input: 训练数据路径
 * --model_prefix: 模型名称，这里是Assembly-tokenizer.model
 * --vocab_size: 扩充词表的大小
@@ -42,7 +42,7 @@ PS: yahma/llama-7b-hf的tokenizer和LLM4Binary的tokenizer分词效果完全一�
 
 yahma/llama-7b-hf的tokenizer共有32000个tokens，与具有4000个tokens的Assembly-tokenizer.model合并后，新的tokenizer去除重复tokens后共有33892个tokens，模型分别以huggingface格式和sentencepiece格式保存在Assembly——tokenizer文件夹下
 
-### 模型训练(In progress)
+### 模型训练 (In progress)
 
 LoRA预训练获得LoRA权重参数
 
@@ -57,7 +57,7 @@ sh run_pt.sh
 
 再次进行合并，得到更适用于处理汇编指令的基础模型
 
-### Decompile微调(Todo)
+### Decompile微调 (Todo)
 
 在重新预训练之后的deepseek-coder模型的基础上再进行Decompile微调
 

@@ -5,7 +5,7 @@ from sentencepiece import sentencepiece_model_pb2 as sp_pb2_model
 import sentencepiece as spm
 from tokenizers import SentencePieceBPETokenizer
 
-assembly_sp_model_file = '../Assembly-tokenizer.model'
+assembly_sp_model_file = '../../Assembly-tokenizer.model'
 
 # load
 llama_tokenizer = LlamaTokenizer.from_pretrained("yahma/llama-7b-hf")
@@ -38,8 +38,8 @@ for p in assembly_spm.pieces:
 print(f"New model pieces: {len(llama_spm.pieces)}")
 
 ## Save
-output_sp_dir = '../Assembly_tokenizer/merged_tokenizer_sp'
-output_hf_dir = '../Assembly_tokenizer/merged_tokenizer_hf'
+output_sp_dir = '../../Assembly_tokenizer/merged_tokenizer_sp'
+output_hf_dir = '../../Assembly_tokenizer/merged_tokenizer_hf'
 os.makedirs(output_sp_dir,exist_ok=True)
 
 #保存为sentencepiece格式（tokenizer.model）
